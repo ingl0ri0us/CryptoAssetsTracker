@@ -7,5 +7,5 @@ import java.util.List;
 import io.reactivex.Single;
 
 public interface Repo {
-    Single<List<ShortCoinInfo>> getCoinsList();
+    Single<List<ShortCoinInfo>> getSortedByRankCoinsList();
 }

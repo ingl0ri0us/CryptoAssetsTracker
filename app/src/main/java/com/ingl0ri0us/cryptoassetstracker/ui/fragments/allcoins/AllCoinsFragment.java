@@ -25,7 +25,6 @@ import moxy.presenter.ProvidePresenter;
 
 public class AllCoinsFragment extends MvpAppCompatFragment implements AllCoinsView {
     public static AllCoinsFragment getInstance() {
-        // TODO: 2020-01-19 add Bundle
         return new AllCoinsFragment();
     }
 

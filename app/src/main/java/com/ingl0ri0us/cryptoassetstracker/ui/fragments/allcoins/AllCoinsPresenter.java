@@ -39,11 +39,10 @@ public class AllCoinsPresenter extends MvpPresenter<AllCoinsView> {
         loadData();
     }
 
-    //possible place of error, wrong scheduler
     @SuppressLint("CheckResult")
     private void loadData() {
         getViewState().showLoading();
-        coinsRepo.getCoinsList()
+        coinsRepo.getSortedByRankCoinsList()
                 .observeOn(mainThreadScheduler)
                 .subscribe(list -> {
                     allCoinsList.setList(list);

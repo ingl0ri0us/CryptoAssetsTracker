@@ -6,7 +6,11 @@ public class CoinIdMapResponse {
     @SerializedName("status")
     Status status;
     @SerializedName("data")
-    public Data[] data;
+    Data[] data;
+
+    public Data[] getData() {
+        return data;
+    }
 
     class Status {
         @SerializedName("timestamp")
@@ -49,6 +53,10 @@ public class CoinIdMapResponse {
 
         public int getRank() {
             return rank;
+        }
+
+        public int getId() {
+            return id;
         }
     }
 

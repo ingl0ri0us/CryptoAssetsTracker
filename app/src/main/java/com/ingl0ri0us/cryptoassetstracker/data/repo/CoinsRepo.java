@@ -2,6 +2,7 @@ package com.ingl0ri0us.cryptoassetstracker.data.repo;
 
 import com.ingl0ri0us.cryptoassetstracker.data.api.CoinMarketCapApiKey;
 import com.ingl0ri0us.cryptoassetstracker.data.api.CoinMarketCapEndpoints;
+import com.ingl0ri0us.cryptoassetstracker.data.cache.Cache;
 import com.ingl0ri0us.cryptoassetstracker.data.entity.ShortCoinInfo;
 import com.ingl0ri0us.cryptoassetstracker.utils.NetworkStatus;
 
@@ -13,35 +14,35 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class CoinsRepo implements Repo {
+    Cache cache;
     NetworkStatus networkStatus;
     CoinMarketCapEndpoints api;
     String apiKey = CoinMarketCapApiKey.COINMARKETCAP_API_KEY;
 
-    public CoinsRepo(NetworkStatus networkStatus, CoinMarketCapEndpoints api) {
+    public CoinsRepo(Cache cache, NetworkStatus networkStatus, CoinMarketCapEndpoints api) {
+        this.cache = cache;
         this.networkStatus = networkStatus;
         this.api = api;
     }
 
     @Override
-    public Single<List<ShortCoinInfo>> getCoinsList() {
+    public Single<List<ShortCoinInfo>> getSortedByRankCoinsList() {
         if (networkStatus.isOnline()) {
             return api.getIdMap(apiKey)
                     .flatMapObservable(coinIdMapResponse ->
-                            Observable.fromArray(coinIdMapResponse.data))
+                            Observable.fromArray(coinIdMapResponse.getData()))
                     .flatMap(data -> {
-                        ShortCoinInfo coin = new ShortCoinInfo(data.getName(), data.getRank());
+                        ShortCoinInfo coin = new ShortCoinInfo(data.getId(), data.getName(), data.getRank());
+                        cache.putShortCoinInfo(coin).subscribe();
                         return Observable.just(coin);
                     })
                     .toSortedList()
-                    .map(list -> {
-                        // TODO: 2020-01-19 implement cache
-                        Timber.d(list.toString() + " to cache");
-                        return list;
-                    })
                     .subscribeOn(Schedulers.computation());
         } else {
-            Timber.d("cache not implemented yet");
-            return null;
+            return cache.getAllCoins().map(list -> {
+                list.sort(ShortCoinInfo::compareTo);
+                return list;
+            }).subscribeOn(Schedulers.computation());
         }
     }
 }

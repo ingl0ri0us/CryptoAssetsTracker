@@ -1,10 +1,12 @@
 package com.ingl0ri0us.cryptoassetstracker.data.entity;
 
 public class ShortCoinInfo implements Comparable<ShortCoinInfo> {
+    private int coinId;
     private String coinName;
     private int coinRank;
 
-    public ShortCoinInfo(String coinName, int coinRank) {
+    public ShortCoinInfo(int coinId, String coinName, int coinRank) {
+        this.coinId = coinId;
         this.coinName = coinName;
         this.coinRank = coinRank;
     }
@@ -20,5 +22,9 @@ public class ShortCoinInfo implements Comparable<ShortCoinInfo> {
 
     public int getCoinRank() {
         return coinRank;
+    }
+
+    public int getCoinId() {
+        return coinId;
     }
 }
