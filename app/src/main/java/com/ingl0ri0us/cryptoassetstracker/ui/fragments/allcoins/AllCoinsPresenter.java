@@ -40,7 +40,7 @@ public class AllCoinsPresenter extends MvpPresenter<AllCoinsView> {
     }
 
     @SuppressLint("CheckResult")
-    private void loadData() {
+    public void loadData() {
         getViewState().showLoading();
         coinsRepo.getSortedByRankCoinsList()
                 .observeOn(mainThreadScheduler)

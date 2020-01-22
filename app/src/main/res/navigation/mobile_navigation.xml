@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_all_coins">
+
+    <fragment
+        android:id="@+id/navigation_all_coins"
+        android:name="com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.AllCoinsFragment"
+        android:label="@string/title_all_coins"
+        tools:layout="@layout/fragment_all_coins" />
+
+    <fragment
+        android:id="@+id/navigation_watchlist"
+        android:name="com.ingl0ri0us.cryptoassetstracker.ui.fragments.watchlist.WatchlistFragment"
+        android:label="@string/title_watchlist"
+        tools:layout="@layout/fragment_watchlist" />
+
+    <fragment
+        android:id="@+id/navigation_wallet"
+        android:name="com.ingl0ri0us.cryptoassetstracker.ui.fragments.wallet.WalletFragment"
+        android:label="@string/title_wallet"
+        tools:layout="@layout/fragment_wallet" />
+</navigation>
