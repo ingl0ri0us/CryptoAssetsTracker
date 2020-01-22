@@ -12,7 +12,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class CoinsRepo implements Repo {
     Cache cache;
@@ -49,6 +48,7 @@ public class CoinsRepo implements Repo {
 
     @Override
     public Single<FullCoinInfo> getFullCoinInfoById(String coinId) {
+        // TODO: 2020-01-22 implement caching
         return api.getFullCoinInfo(apiKey, coinId)
                 .map(fullCoinInfoResponse -> {
                     String name = fullCoinInfoResponse.getDataByCoinId(coinId).getName();

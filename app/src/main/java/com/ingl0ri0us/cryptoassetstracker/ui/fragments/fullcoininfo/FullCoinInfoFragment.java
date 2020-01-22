@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.ingl0ri0us.cryptoassetstracker.App;
 import com.ingl0ri0us.cryptoassetstracker.R;
+import com.ingl0ri0us.cryptoassetstracker.data.image.ImageLoader;
+import com.ingl0ri0us.cryptoassetstracker.data.image.PicassoImageLoader;
 
 import javax.inject.Inject;
 
@@ -26,6 +28,11 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 
 public class FullCoinInfoFragment extends MvpAppCompatFragment implements FullCoinInfoView {
+
+//    @Inject
+//    ImageLoader<ImageView> imageLoader;
+
+    ImageLoader<ImageView> imageLoader = new PicassoImageLoader();
 
     public static FullCoinInfoFragment newInstance(String coinId) {
         FullCoinInfoFragment fragment = new FullCoinInfoFragment();
@@ -93,6 +100,6 @@ public class FullCoinInfoFragment extends MvpAppCompatFragment implements FullCo
 
     @Override
     public void setCoinThumbnail(String thumbnailUrl) {
-        // TODO: 2020-01-22 implement picasso
+        imageLoader.loadInto(thumbnailUrl, coinThumbnail);
     }
 }

@@ -14,12 +14,17 @@ import dagger.Component;
 @Component(modules = {
         AppModule.class,
         RepoModule.class,
-        CiceroneModule.class
+        CiceroneModule.class,
+        ImageModule.class
 })
 public interface AppComponent {
     void inject(AllCoinsFragment allCoinsFragment);
+
     void inject(AllCoinsPresenter allCoinsPresenter);
+
     void inject(MainActivity mainActivity);
+
     void inject(FullCoinInfoFragment fullCoinInfoFragment);
+
     void inject(FullCoinInfoPresenter fullCoinInfoPresenter);
 }
