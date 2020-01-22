@@ -19,7 +19,7 @@ public class FullCoinInfoPresenter extends MvpPresenter<FullCoinInfoView> {
     @Inject
     Repo repo;
 
-    public FullCoinInfoPresenter(Scheduler mainThreadScheduler, String coinId) {
+    FullCoinInfoPresenter(Scheduler mainThreadScheduler, String coinId) {
         this.mainThreadScheduler = mainThreadScheduler;
         this.coinId = coinId;
     }
@@ -31,7 +31,7 @@ public class FullCoinInfoPresenter extends MvpPresenter<FullCoinInfoView> {
     }
 
     @SuppressLint("CheckResult")
-    public void loadData() {
+    private void loadData() {
         repo.getFullCoinInfoById(coinId)
                 .observeOn(mainThreadScheduler)
                 .subscribe(fullCoinInfo -> {

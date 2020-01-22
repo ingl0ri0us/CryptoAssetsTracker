@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.ingl0ri0us.cryptoassetstracker.data.entity.ShortCoinInfo;
 import com.ingl0ri0us.cryptoassetstracker.data.entity.room.RoomShortCoinInfo;
 
 import java.util.List;

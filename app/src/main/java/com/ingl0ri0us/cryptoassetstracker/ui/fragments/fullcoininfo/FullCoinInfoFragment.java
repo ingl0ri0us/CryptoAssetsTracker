@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,8 @@ import android.widget.TextView;
 import com.ingl0ri0us.cryptoassetstracker.App;
 import com.ingl0ri0us.cryptoassetstracker.R;
 import com.ingl0ri0us.cryptoassetstracker.data.image.ImageLoader;
-import com.ingl0ri0us.cryptoassetstracker.data.image.PicassoImageLoader;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -29,10 +29,8 @@ import moxy.presenter.ProvidePresenter;
 
 public class FullCoinInfoFragment extends MvpAppCompatFragment implements FullCoinInfoView {
 
-//    @Inject
-//    ImageLoader<ImageView> imageLoader;
-
-    ImageLoader<ImageView> imageLoader = new PicassoImageLoader();
+    @Inject
+    ImageLoader<ImageView> imageLoader;
 
     public static FullCoinInfoFragment newInstance(String coinId) {
         FullCoinInfoFragment fragment = new FullCoinInfoFragment();
@@ -62,6 +60,7 @@ public class FullCoinInfoFragment extends MvpAppCompatFragment implements FullCo
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_full_coin_info, container, false);
         ButterKnife.bind(this, view);
+        App.getInstance().getAppComponent().inject(this);
         return view;
     }
 
@@ -71,16 +70,11 @@ public class FullCoinInfoFragment extends MvpAppCompatFragment implements FullCo
     }
 
     @ProvidePresenter
-    public FullCoinInfoPresenter providePresenter() {
+    FullCoinInfoPresenter providePresenter() {
         FullCoinInfoPresenter fullCoinInfoPresenter = new FullCoinInfoPresenter
-                (AndroidSchedulers.mainThread(), getArguments().getString("coinId"));
+                (AndroidSchedulers.mainThread(), Objects.requireNonNull(getArguments()).getString("coinId"));
         App.getInstance().getAppComponent().inject(fullCoinInfoPresenter);
         return fullCoinInfoPresenter;
-    }
-
-    @Override
-    public void init() {
-
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.ingl0ri0us.cryptoassetstracker.di;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ingl0ri0us.cryptoassetstracker.data.api.CoinMarketCapEndpoints;
@@ -19,17 +18,17 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class ApiModule {
+class ApiModule {
     @Named("baseUrl")
     @Provides
-    public String baseUrl() {
+    String baseUrl() {
         return "https://pro-api.coinmarketcap.com/";
     }
 
     @Singleton
     @Provides
-    public CoinMarketCapEndpoints apiService(
-            @Named("clientLogging")OkHttpClient okHttpClient,
+    CoinMarketCapEndpoints apiService(
+            @Named("clientLogging") OkHttpClient okHttpClient,
             Gson gson,
             @Named("baseUrl") String baseUrl) {
         return new Retrofit.Builder()
@@ -43,7 +42,7 @@ public class ApiModule {
 
     @Singleton
     @Provides
-    public HttpLoggingInterceptor loggingInterceptor() {
+    HttpLoggingInterceptor loggingInterceptor() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         return interceptor;
@@ -52,7 +51,7 @@ public class ApiModule {
     @Named("clientLogging")
     @Singleton
     @Provides
-    public OkHttpClient okHttpClientLogging(HttpLoggingInterceptor loggingInterceptor) {
+    OkHttpClient okHttpClientLogging(HttpLoggingInterceptor loggingInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build();
@@ -60,14 +59,13 @@ public class ApiModule {
 
     @Singleton
     @Provides
-    public NetworkStatus networkStatus() {
+    NetworkStatus networkStatus() {
         return new DeviceNetworkStatus();
     }
 
     @Singleton
     @Provides
-    public Gson gson() {
+    Gson gson() {
         return new GsonBuilder().create();
     }
-
 }

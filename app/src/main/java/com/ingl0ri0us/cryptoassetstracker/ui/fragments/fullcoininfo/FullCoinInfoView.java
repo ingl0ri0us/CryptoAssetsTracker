@@ -7,8 +7,6 @@ import moxy.viewstate.strategy.StateStrategyType;
 @StateStrategyType(value = AddToEndSingleStrategy.class)
 public interface FullCoinInfoView extends MvpView {
 
-    void init();
-
     void setCoinName(String coinName);
 
     void setCoinUrl(String coinUrl);

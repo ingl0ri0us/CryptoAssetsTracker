@@ -13,9 +13,9 @@ import dagger.Provides;
         ApiModule.class,
         CacheModule.class
 })
-public class RepoModule {
+class RepoModule {
     @Provides
-    public Repo getCoinsRepo(Cache cache, NetworkStatus networkStatus, CoinMarketCapEndpoints api) {
+    Repo getCoinsRepo(Cache cache, NetworkStatus networkStatus, CoinMarketCapEndpoints api) {
         return new CoinsRepo(cache, networkStatus, api);
     }
 }

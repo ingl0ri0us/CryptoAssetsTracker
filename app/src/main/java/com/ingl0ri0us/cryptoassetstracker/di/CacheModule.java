@@ -13,10 +13,10 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class CacheModule {
+class CacheModule {
     @Singleton
     @Provides
-    public Database roomDatabase(App app) {
+    Database roomDatabase(App app) {
         return Room
                 .databaseBuilder(app, Database.class, Database.DB_NAME)
                 .fallbackToDestructiveMigration()
@@ -25,7 +25,7 @@ public class CacheModule {
 
     @Singleton
     @Provides
-    public Cache roomCache(Database database) {
+    Cache roomCache(Database database) {
         return new RoomCache(database);
     }
 }

@@ -9,10 +9,10 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ImageModule {
+class ImageModule {
 
     @Provides
-    public ImageLoader<ImageView> picassoImageLoader() {
+    ImageLoader<ImageView> picassoImageLoader() {
         return new PicassoImageLoader();
     }
 }

@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Completable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class RoomCache implements Cache {
-    Database database;
+    private Database database;
 
     public RoomCache(Database database) {
         this.database = database;

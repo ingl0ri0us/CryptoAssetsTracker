@@ -8,8 +8,8 @@ import java.util.List;
 import io.reactivex.subjects.PublishSubject;
 
 public class AllCoinsList implements CoinsList {
-    PublishSubject<ListItem> clckSubject = PublishSubject.create();
-    List<ShortCoinInfo> shortCoinInfoList = new ArrayList<>();
+    private PublishSubject<ListItem> clckSubject = PublishSubject.create();
+    private List<ShortCoinInfo> shortCoinInfoList = new ArrayList<>();
 
     @Override
     public void bind(ListItem item) {

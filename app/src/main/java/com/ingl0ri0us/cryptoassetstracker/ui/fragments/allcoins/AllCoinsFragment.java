@@ -7,15 +7,14 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingl0ri0us.cryptoassetstracker.App;
 import com.ingl0ri0us.cryptoassetstracker.R;
 import com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.recyclerview.AllCoinsListAdapter;
-import com.ingl0ri0us.cryptoassetstracker.ui.fragments.fullcoininfo.FullCoinInfoFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +38,7 @@ public class AllCoinsFragment extends MvpAppCompatFragment implements AllCoinsVi
     @BindView(R.id.loading_layout)
     RelativeLayout loadingLayout;
 
-    AllCoinsListAdapter adapter;
+    private AllCoinsListAdapter adapter;
 
     @Nullable
     @Override
@@ -56,7 +55,7 @@ public class AllCoinsFragment extends MvpAppCompatFragment implements AllCoinsVi
     }
 
     @ProvidePresenter
-    public AllCoinsPresenter providePresenter() {
+    AllCoinsPresenter providePresenter() {
         AllCoinsPresenter presenter = new AllCoinsPresenter(AndroidSchedulers.mainThread());
         App.getInstance().getAppComponent().inject(presenter);
         return presenter;

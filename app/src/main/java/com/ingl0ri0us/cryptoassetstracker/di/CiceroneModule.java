@@ -9,18 +9,18 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;
 
 @Module
-public class CiceroneModule {
-    Cicerone<Router> cicerone = Cicerone.create();
+class CiceroneModule {
+    private Cicerone<Router> cicerone = Cicerone.create();
 
     @Singleton
     @Provides
-    public NavigatorHolder navigatorHolder() {
+    NavigatorHolder navigatorHolder() {
         return cicerone.getNavigatorHolder();
     }
 
     @Singleton
     @Provides
-    public Router getRouter() {
+    Router getRouter() {
         return cicerone.getRouter();
     }
 }

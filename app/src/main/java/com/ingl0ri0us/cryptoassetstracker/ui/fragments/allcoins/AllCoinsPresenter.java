@@ -32,7 +32,7 @@ public class AllCoinsPresenter extends MvpPresenter<AllCoinsView> {
         allCoinsList = new AllCoinsList();
     }
 
-    public CoinsList getAllCoinsList() {
+    CoinsList getAllCoinsList() {
         return allCoinsList;
     }
 

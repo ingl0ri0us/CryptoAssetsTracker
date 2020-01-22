@@ -1,22 +1,14 @@
 package com.ingl0ri0us.cryptoassetstracker.ui.activity;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ingl0ri0us.cryptoassetstracker.App;
 import com.ingl0ri0us.cryptoassetstracker.R;
 import com.ingl0ri0us.cryptoassetstracker.navigation.Screens;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import javax.inject.Inject;
 
@@ -37,7 +29,6 @@ public class MainActivity extends MvpAppCompatActivity {
 
     @Inject
     NavigatorHolder navigatorHolder;
-
 
     Navigator navigator = new SupportAppNavigator(this, R.id.fragment_holder) {
 

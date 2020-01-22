@@ -26,23 +26,11 @@ public class FullCoinInfo {
         return coinUrlAddress;
     }
 
-    public void setCoinUrlAddress(String coinUrlAddress) {
-        this.coinUrlAddress = coinUrlAddress;
-    }
-
     public String getCoinDescription() {
         return coinDescription;
     }
 
-    public void setCoinDescription(String coinDescription) {
-        this.coinDescription = coinDescription;
-    }
-
     public String getCoinThumbnailUrl() {
         return coinThumbnailUrl;
-    }
-
-    public void setCoinThumbnailUrl(String coinThumbnailUrl) {
-        this.coinThumbnailUrl = coinThumbnailUrl;
     }
 }

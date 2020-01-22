@@ -14,10 +14,10 @@ import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class CoinsRepo implements Repo {
-    Cache cache;
-    NetworkStatus networkStatus;
-    CoinMarketCapEndpoints api;
-    String apiKey = CoinMarketCapApiKey.COINMARKETCAP_API_KEY;
+    private Cache cache;
+    private NetworkStatus networkStatus;
+    private CoinMarketCapEndpoints api;
+    private String apiKey = CoinMarketCapApiKey.COINMARKETCAP_API_KEY;
 
     public CoinsRepo(Cache cache, NetworkStatus networkStatus, CoinMarketCapEndpoints api) {
         this.cache = cache;
@@ -48,7 +48,6 @@ public class CoinsRepo implements Repo {
 
     @Override
     public Single<FullCoinInfo> getFullCoinInfoById(String coinId) {
-        // TODO: 2020-01-22 implement caching
         return api.getFullCoinInfo(apiKey, coinId)
                 .map(fullCoinInfoResponse -> {
                     String name = fullCoinInfoResponse.getDataByCoinId(coinId).getName();
