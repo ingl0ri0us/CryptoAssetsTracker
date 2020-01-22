@@ -3,6 +3,7 @@ package com.ingl0ri0us.cryptoassetstracker.data.repo;
 import com.ingl0ri0us.cryptoassetstracker.data.api.CoinMarketCapApiKey;
 import com.ingl0ri0us.cryptoassetstracker.data.api.CoinMarketCapEndpoints;
 import com.ingl0ri0us.cryptoassetstracker.data.cache.Cache;
+import com.ingl0ri0us.cryptoassetstracker.data.entity.FullCoinInfo;
 import com.ingl0ri0us.cryptoassetstracker.data.entity.ShortCoinInfo;
 import com.ingl0ri0us.cryptoassetstracker.utils.NetworkStatus;
 
@@ -44,5 +45,18 @@ public class CoinsRepo implements Repo {
                 return list;
             }).subscribeOn(Schedulers.computation());
         }
+    }
+
+    @Override
+    public Single<FullCoinInfo> getFullCoinInfoById(String coinId) {
+        return api.getFullCoinInfo(apiKey, coinId)
+                .map(fullCoinInfoResponse -> {
+                    String name = fullCoinInfoResponse.getDataByCoinId(coinId).getName();
+                    String url = fullCoinInfoResponse.getDataByCoinId(coinId).getUrls().getWebsite();
+                    String description = fullCoinInfoResponse.getDataByCoinId(coinId).getDescription();
+                    String thumbnail = fullCoinInfoResponse.getDataByCoinId(coinId).getLogo();
+
+                    return new FullCoinInfo(name, url, description, thumbnail);
+                }).subscribeOn(Schedulers.io());
     }
 }

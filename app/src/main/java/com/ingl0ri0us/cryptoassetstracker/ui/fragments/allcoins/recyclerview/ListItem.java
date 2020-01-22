@@ -4,4 +4,7 @@ public interface ListItem {
     int getItemPosition();
     void setCoinName(String coinName);
     void setCoinRank(String coinRank);
+    void setCoinId(int id);
+
+    int getCoinId();
 }

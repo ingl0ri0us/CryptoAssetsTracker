@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ingl0ri0us.cryptoassetstracker.App;
 import com.ingl0ri0us.cryptoassetstracker.R;
 import com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.recyclerview.AllCoinsListAdapter;
+import com.ingl0ri0us.cryptoassetstracker.ui.fragments.fullcoininfo.FullCoinInfoFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +25,8 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 
 public class AllCoinsFragment extends MvpAppCompatFragment implements AllCoinsView {
-    public static AllCoinsFragment getInstance() {
+
+    public static AllCoinsFragment newInstance() {
         return new AllCoinsFragment();
     }
 

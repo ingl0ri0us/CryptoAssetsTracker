@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
 
     //test
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.jakewharton.timber:timber:4.7.1'
     testImplementation 'org.mockito:mockito-core:3.0.0'
@@ -88,7 +89,7 @@ dependencies {
     annotationProcessor "com.github.moxy-community:moxy-compiler:2.0.2"
 
     //cicerone
-    implementation 'ru.terrakok.cicerone:cicerone:4.0.2'
+    implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
 
     //paper
     implementation 'io.paperdb:paperdb:2.6'

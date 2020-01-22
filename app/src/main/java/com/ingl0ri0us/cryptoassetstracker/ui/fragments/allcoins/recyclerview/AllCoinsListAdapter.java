@@ -48,6 +48,7 @@ public class AllCoinsListAdapter extends RecyclerView.Adapter<AllCoinsListAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder implements ListItem {
         int itemPosition = 0;
+        int coinId = 0;
 
         @BindView(R.id.coin_name)
         TextView coinNameField;
@@ -73,6 +74,16 @@ public class AllCoinsListAdapter extends RecyclerView.Adapter<AllCoinsListAdapte
         @Override
         public void setCoinRank(String coinRank) {
             coinRankField.setText(coinRank);
+        }
+
+        @Override
+        public void setCoinId(int id) {
+            coinId = id;
+        }
+
+        @Override
+        public int getCoinId() {
+            return coinId;
         }
     }
 }

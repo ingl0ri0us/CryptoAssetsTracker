@@ -16,6 +16,7 @@ public class AllCoinsList implements CoinsList {
         ShortCoinInfo coin = shortCoinInfoList.get(item.getItemPosition());
         item.setCoinName(coin.getCoinName());
         item.setCoinRank(Integer.toString(coin.getCoinRank()));
+        item.setCoinId(coin.getCoinId());
     }
 
     @Override
