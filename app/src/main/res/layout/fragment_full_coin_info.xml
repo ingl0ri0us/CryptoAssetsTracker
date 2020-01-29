@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.fullcoininfo.FullCoinInfoFragment">
+
+    <TextView
+        android:id="@+id/fullCoinInfo_coinName"
+        android:layout_width="121dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="64dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fullCoinInfo_urlAddress"
+        android:layout_width="200dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="28dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fullCoinInfo_coinName" />
+
+    <TextView
+        android:id="@+id/fullCoinInfo_coinDescription"
+        android:layout_width="326dp"
+        android:layout_height="268dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="48dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fullCoinInfo_urlAddress" />
+
+    <ImageView
+        android:id="@+id/fullCoinInfo_coinThumbnail"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/coin_thumbnail" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
