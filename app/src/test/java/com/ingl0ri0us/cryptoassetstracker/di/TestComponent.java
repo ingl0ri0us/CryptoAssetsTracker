@@ -7,7 +7,10 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = TestRepoModule.class)
+@Component(modules = {
+        TestRepoModule.class,
+        TestCiceroneModule.class,
+        TestNetworkStatusModule.class})
 public interface TestComponent {
     void inject(AllCoinsPresenter presenter);
 }

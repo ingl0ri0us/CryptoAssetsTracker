@@ -3,23 +3,31 @@ package com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.recyclerview;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingl0ri0us.cryptoassetstracker.R;
+import com.ingl0ri0us.cryptoassetstracker.data.entity.ShortCoinInfo;
 import com.jakewharton.rxbinding3.view.RxView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AllCoinsListAdapter extends RecyclerView.Adapter<AllCoinsListAdapter.ViewHolder> {
+public class AllCoinsListAdapter extends RecyclerView.Adapter<AllCoinsListAdapter.ViewHolder> implements Filterable {
 
-    private CoinsList coinsList;
+    private DisplayableCoinsList coinsListToDisplay;
+    private CoinsList initialCoinsList;
 
-    public AllCoinsListAdapter(CoinsList coinsList) {
-        this.coinsList = coinsList;
+    public AllCoinsListAdapter(CoinsList initialCoinsList, DisplayableCoinsList coinsListToDisplay) {
+        this.initialCoinsList = initialCoinsList;
+        this.coinsListToDisplay = coinsListToDisplay;
     }
 
     @NonNull
@@ -32,18 +40,46 @@ public class AllCoinsListAdapter extends RecyclerView.Adapter<AllCoinsListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.itemPosition = position;
-        coinsList.bind(holder);
+        coinsListToDisplay.bind(holder);
 
-        //click on item
         RxView
                 .clicks(holder.itemView)
                 .map(o -> holder)
-                .subscribe(coinsList.getClickSubject());
+                .subscribe(coinsListToDisplay.getClickedListItem());
     }
 
     @Override
     public int getItemCount() {
-        return coinsList.getCount();
+        return coinsListToDisplay.getCount();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                List<ShortCoinInfo> filteredTempList = new ArrayList<>();
+                FilterResults filterResults = new FilterResults();
+                if (charString.isEmpty()) {
+                    filterResults.values = initialCoinsList.getList();
+                } else {
+                    for (ShortCoinInfo item : initialCoinsList.getList()) {
+                        if (item.getCoinName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredTempList.add(item);
+                        }
+                    }
+                    filterResults.values = filteredTempList;
+                }
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                coinsListToDisplay.getFilteredList().onNext((ArrayList<ShortCoinInfo>) results.values);
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements ListItem {

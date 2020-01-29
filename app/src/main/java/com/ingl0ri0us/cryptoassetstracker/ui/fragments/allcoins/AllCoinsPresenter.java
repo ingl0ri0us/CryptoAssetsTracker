@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 
 import com.ingl0ri0us.cryptoassetstracker.data.repo.Repo;
 import com.ingl0ri0us.cryptoassetstracker.navigation.Screens;
-import com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.recyclerview.AllCoinsList;
+import com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.recyclerview.CoinsListToDisplay;
+import com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.recyclerview.DisplayableCoinsList;
+import com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.recyclerview.InitialCoinsList;
 import com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.recyclerview.CoinsList;
+import com.ingl0ri0us.cryptoassetstracker.utils.NetworkStatus;
 
 import javax.inject.Inject;
 
@@ -19,7 +22,8 @@ import timber.log.Timber;
 public class AllCoinsPresenter extends MvpPresenter<AllCoinsView> {
 
     private Scheduler mainThreadScheduler;
-    private AllCoinsList allCoinsList;
+    private InitialCoinsList initialCoinsList;
+    private CoinsListToDisplay coinsListToDisplay;
 
     @Inject
     Repo coinsRepo;
@@ -27,13 +31,21 @@ public class AllCoinsPresenter extends MvpPresenter<AllCoinsView> {
     @Inject
     Router router;
 
+    @Inject
+    NetworkStatus networkStatus;
+
     public AllCoinsPresenter(Scheduler mainThreadScheduler) {
         this.mainThreadScheduler = mainThreadScheduler;
-        allCoinsList = new AllCoinsList();
+        initialCoinsList = new InitialCoinsList();
+        coinsListToDisplay = new CoinsListToDisplay();
     }
 
-    CoinsList getAllCoinsList() {
-        return allCoinsList;
+    CoinsList getInitialCoinsList() {
+        return initialCoinsList;
+    }
+
+    DisplayableCoinsList getCoinListToDisplay() {
+        return coinsListToDisplay;
     }
 
     @SuppressLint("CheckResult")
@@ -44,9 +56,18 @@ public class AllCoinsPresenter extends MvpPresenter<AllCoinsView> {
         getViewState().init();
         loadData();
 
-        allCoinsList.getClickSubject().subscribe(listItem -> {
-            String coinId = Integer.toString(listItem.getCoinId());
-            router.navigateTo(new Screens.FullCoinInfoScreen(coinId));
+        coinsListToDisplay.getClickedListItem().subscribe(listItem -> {
+            if(networkStatus.isOnline()) {
+                String coinId = Integer.toString(listItem.getCoinId());
+                router.navigateTo(new Screens.FullCoinInfoScreen(coinId));
+            } else {
+                getViewState().showMessage("Device is currently offline, unable to show full coin info.");
+            }
+        });
+
+        coinsListToDisplay.getFilteredList().subscribe(list -> {
+            coinsListToDisplay.setList(list);
+            getViewState().updateList();
         });
     }
 
@@ -56,7 +77,8 @@ public class AllCoinsPresenter extends MvpPresenter<AllCoinsView> {
         coinsRepo.getSortedByRankCoinsList()
                 .observeOn(mainThreadScheduler)
                 .subscribe(list -> {
-                    allCoinsList.setList(list);
+                    initialCoinsList.setList(list);
+                    coinsListToDisplay.setList(list);
                     getViewState().updateList();
                     getViewState().hideLoading();
                 }, Timber::e);

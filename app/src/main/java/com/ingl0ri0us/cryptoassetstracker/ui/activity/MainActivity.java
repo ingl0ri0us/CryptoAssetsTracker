@@ -5,14 +5,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ingl0ri0us.cryptoassetstracker.App;
 import com.ingl0ri0us.cryptoassetstracker.R;
 import com.ingl0ri0us.cryptoassetstracker.navigation.Screens;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import moxy.MvpAppCompatActivity;
 import ru.terrakok.cicerone.Navigator;
@@ -55,7 +53,6 @@ public class MainActivity extends MvpAppCompatActivity {
         App.getInstance().getAppComponent().inject(this);
         ButterKnife.bind(this);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
         router.replaceScreen(new Screens.AllCoinsScreen());
     }
 

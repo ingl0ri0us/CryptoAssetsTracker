@@ -64,5 +64,6 @@ public class AllCoinsPresenterUnitTest {
 
         Mockito.verify(allCoinsView, Mockito.times(1)).showLoading();
         Mockito.verify(allCoinsView).updateList();
+        Mockito.verify(allCoinsView).hideLoading();
     }
 }

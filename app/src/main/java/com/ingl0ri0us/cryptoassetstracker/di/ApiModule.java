@@ -3,8 +3,6 @@ package com.ingl0ri0us.cryptoassetstracker.di;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ingl0ri0us.cryptoassetstracker.data.api.CoinMarketCapEndpoints;
-import com.ingl0ri0us.cryptoassetstracker.utils.DeviceNetworkStatus;
-import com.ingl0ri0us.cryptoassetstracker.utils.NetworkStatus;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -17,7 +15,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Module
+@Module(includes = NetworkStatusModule.class)
 class ApiModule {
     @Named("baseUrl")
     @Provides
@@ -55,12 +53,6 @@ class ApiModule {
         return new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build();
-    }
-
-    @Singleton
-    @Provides
-    NetworkStatus networkStatus() {
-        return new DeviceNetworkStatus();
     }
 
     @Singleton

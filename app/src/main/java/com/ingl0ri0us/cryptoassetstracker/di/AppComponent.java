@@ -15,7 +15,8 @@ import dagger.Component;
         AppModule.class,
         RepoModule.class,
         CiceroneModule.class,
-        ImageModule.class
+        ImageModule.class,
+        NetworkStatusModule.class
 })
 public interface AppComponent {
     void inject(AllCoinsFragment allCoinsFragment);

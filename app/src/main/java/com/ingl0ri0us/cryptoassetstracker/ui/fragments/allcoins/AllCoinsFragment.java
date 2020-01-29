@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -15,10 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ingl0ri0us.cryptoassetstracker.App;
 import com.ingl0ri0us.cryptoassetstracker.R;
 import com.ingl0ri0us.cryptoassetstracker.ui.fragments.allcoins.recyclerview.AllCoinsListAdapter;
+import com.jakewharton.rxbinding3.widget.RxTextView;
+import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -38,13 +46,18 @@ public class AllCoinsFragment extends MvpAppCompatFragment implements AllCoinsVi
     @BindView(R.id.loading_layout)
     RelativeLayout loadingLayout;
 
+    @BindView(R.id.coin_search)
+    EditText coinSearchEditText;
+
+    private CompositeDisposable disposable = new CompositeDisposable();
+
     private AllCoinsListAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_coins, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         App.getInstance().getAppComponent().inject(this);
         return view;
     }
@@ -52,6 +65,15 @@ public class AllCoinsFragment extends MvpAppCompatFragment implements AllCoinsVi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        disposable
+                .add(RxTextView
+                        .textChangeEvents(coinSearchEditText)
+                        .skipInitialValue()
+                        .debounce(700, TimeUnit.MILLISECONDS)
+                        .distinctUntilChanged()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(searchCoin()));
     }
 
     @ProvidePresenter
@@ -64,7 +86,7 @@ public class AllCoinsFragment extends MvpAppCompatFragment implements AllCoinsVi
     @Override
     public void init() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AllCoinsListAdapter(presenter.getAllCoinsList());
+        adapter = new AllCoinsListAdapter(presenter.getInitialCoinsList(), presenter.getCoinListToDisplay());
         recyclerView.setAdapter(adapter);
     }
 
@@ -86,5 +108,24 @@ public class AllCoinsFragment extends MvpAppCompatFragment implements AllCoinsVi
     @Override
     public void hideLoading() {
         loadingLayout.setVisibility(View.GONE);
+    }
+
+    private DisposableObserver<TextViewTextChangeEvent> searchCoin() {
+        return new DisposableObserver<TextViewTextChangeEvent>() {
+            @Override
+            public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
+                adapter.getFilter().filter(textViewTextChangeEvent.getText());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
     }
 }
