@@ -32,6 +32,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 
 public class AllCoinsFragment extends MvpAppCompatFragment implements AllCoinsView {
+    //git test branch
 
     public static AllCoinsFragment newInstance() {
         return new AllCoinsFragment();
